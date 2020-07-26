@@ -1,0 +1,37 @@
+.RandomPlanet {
+    display: flex;
+    min-width: 500px;
+    margin-bottom: 60px;
+    background: #353b42;
+    padding: 20px;
+    border-radius: 10px;
+
+}
+
+.RandomPlanet img {
+    width: 200px;
+    border-radius: 10px;
+    margin-right: 40px;
+}
+
+.tableDescription {
+    margin-left: 20px;
+}
+
+.tableRow {
+    border-top: 1px solid #544d4d;
+}
+
+.tableCell {
+    padding: 10px 0 10px 0;
+}
+
+
+.descriptionWrapper {
+    flex-grow: 0.2;
+}
+
+.descriptionWrapper h3 {
+    color: #fff;
+    margin-bottom: 10px;
+}

@@ -1,0 +1,30 @@
+.person-details {
+    background: #353b42;
+    padding: 30px;
+    border-radius: 10px;
+    display: flex;
+}
+
+.person-image {
+    border-radius: 5px;
+    width: 170px;
+    margin-right: 30px;
+}
+
+.info-wrapper {
+    padding-top: 20px;
+    flex-grow: 1;
+}
+
+.info-table {
+    width: 100%;
+}
+
+.table-row {
+    border-top: 1px solid #414851;
+    display: flex;
+}
+
+.table-cell {
+    padding-top: 10px;
+}
