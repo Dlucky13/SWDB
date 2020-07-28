@@ -1,20 +1,21 @@
 .list-wrapper {
     background: #353b42;
     border-radius: 10px;
-    margin-bottom: 40px;
+    width: 40%;
+    margin-right: 5%;
 }
 
-.person-list {
+.list {
     list-style: none;
     margin: 0;
     padding: 10px 0 0 0;
 }
 
-.list-item {
+.item {
     border-bottom: 1px solid #414851;
     padding: 5px 0  5px 20px;
 }
 
-.person-list li:last-child {
+.list li:last-child {
     border: none;
 }

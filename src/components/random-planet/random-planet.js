@@ -1,33 +1,89 @@
 import React from "react";
-import planetImage from '../../common/431620344-planeti-rNLK-320x240-MM-100.jpg'
+import SwapiService from "../../services/swapi-service";
 import './random-planet.css'
+import {Loader} from "../../common/loader/loader";
+import ErrorIndicator from "../error-indicator/error-indicator";
 
-const planetData = {
-   Population: 123123,
-   'Rotation Period': 34,
-   Diameter: 124
+
+export default class RandomPlanet extends React.Component {
+
+   state = {
+      error: false,
+      loading: true,
+      id: null,
+      name: null,
+      planetInfo : { }
+   }
+
+   swapiService = new SwapiService();
+
+
+
+   componentDidMount() {
+      this.interval = setInterval(this.updatePlanet,25000);
+   }
+
+   componentWillUnmount() {
+      clearInterval(this.interval)
+   }
+
+   onPlanetLoaded = (planet) => {
+      this.setState({ loading:false , ...planet } );
+   }
+
+   onError = (err) => {
+      this.setState( {
+         error: true
+      })
+   }
+
+   updatePlanet = () => {
+      const id = Math.floor(Math.random()*25) + 2;
+      this.swapiService
+         .getPlanet(id)
+         .then(this.onPlanetLoaded)
+         .catch(this.onError);
+   }
+
+   render() {
+      const { error, loading, ...planet } = this.state;
+
+      if(error) {
+         return <ErrorIndicator />
+      }
+      const content = loading ? <Loader /> : <PlanetView planet = { planet }/>;
+
+      return (
+         <div className='RandomPlanet'>
+            { content }
+         </div>
+      )
+   }
 }
 
-export const RandomPlanet = () => {
 
-   const planetDescription = Object.keys(planetData).map( (key) => {
+const PlanetView = ({planet}) => {
+   const { id, planetInfo, name } = planet
+   const planetDescription = Object.keys(planetInfo).map((key) => {
       return (
-         <tr className='tableRow'>
-            <td className='tableCell'>{key}</td>&nbsp;&nbsp;
-            <td className='tableCell'>{planetData[key]}</td>
+         <tr className='tableRow' key={key}>
+            <td className='tableCell'>{key}</td>
+            <td className='tableCell'>{planetInfo[key]}</td>
          </tr>
       )
    })
 
    return (
-      <div className='RandomPlanet'>
-            <img src={planetImage}/>
-            <div className='descriptionWrapper'>
-               <h3>Planet Name</h3>
-               <table className='tableDescription'>
-                  {planetDescription}
-               </table>
+      <>
+         <img src={`https://starwars-visualguide.com/assets/img/planets/${id}.jpg`}/>
+         <div className='descriptionWrapper'>
+            <h3>{name}</h3>
+            <table className='tableDescription'>
+               <tbody>
+               { planetDescription }
+               </tbody>
+            </table>
          </div>
-      </div>
+      </>
    )
-} 
+}

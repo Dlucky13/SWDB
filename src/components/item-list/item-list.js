@@ -1,23 +1,52 @@
 import React from "react";
 import './item-list.css'
+import SwapiService from "../../services/swapi-service";
+import {Loader} from "../../common/loader/loader";
 
-const personsData = [
-   'Luke Skywalker', 'Dart Vader', 'R2-D2', 'Palpatin', 'Obivan Kenobi'
-]
+export default class ItemList extends React.Component {
 
-export const ItemList = () => {
+   state = {
+      dataList: null
+   }
 
-   const personsList = personsData.map( person => {
+   componentDidMount() {
+        this.props.getData()
+         .then( (dataList) => {
+            this.setState({ dataList })
+         })
+   }
+
+   renderItems (arr) {
+      return arr.map((item) => {
+         const content = this.props.children(item);
+
+         return (
+            <li
+               className='item'
+               key={item.id}
+               onClick={() => this.onItemClick(item.id)}
+            >{content}</li>
+         )
+      })
+   }
+
+   onItemClick = (id) => {
+      this.props.onItemSelected(id)
+   }
+
+   render () {
+
+      const { dataList } = this.state
+      const itemsList = dataList  ? this.renderItems(dataList) : <Loader />
+
       return (
-         <li className='list-item'>{person}</li>
+         <div className='list-wrapper'>
+            <ul className='list'>
+               { itemsList }
+            </ul>
+         </div>
       )
-   })
+   }
 
-   return (
-      <div className='list-wrapper'>
-         <ul className='person-list'>
-            { personsList }
-         </ul>
-      </div>
-   )
 }
+

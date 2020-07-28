@@ -7,7 +7,7 @@ export const Header = () => {
 
    const navLinks = links.map( (navItem) => {
       return (
-         <li className='nav-list-item'>
+         <li className='nav-list-item' key={navItem}>
             <a
                href='/'
                className=''
