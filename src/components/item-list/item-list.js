@@ -1,52 +1,46 @@
 import React from "react";
 import './item-list.css'
-import SwapiService from "../../services/swapi-service";
-import {Loader} from "../../common/loader/loader";
+import PropTypes from 'prop-types'
 
-export default class ItemList extends React.Component {
+const ItemList =(props) => {
 
-   state = {
-      dataList: null
-   }
+   const { dataList, children, onItemSelected } = props
 
-   componentDidMount() {
-        this.props.getData()
-         .then( (dataList) => {
-            this.setState({ dataList })
-         })
-   }
-
-   renderItems (arr) {
-      return arr.map((item) => {
-         const content = this.props.children(item);
+   const showContent = dataList.map((item) => {
+         const content = children(item);
 
          return (
             <li
                className='item'
                key={item.id}
-               onClick={() => this.onItemClick(item.id)}
+               onClick={() => onItemClick(item.id)}
             >{content}</li>
          )
-      })
+      }
+   )
+
+   const onItemClick = (id) => {
+      onItemSelected(id)
    }
 
-   onItemClick = (id) => {
-      this.props.onItemSelected(id)
-   }
-
-   render () {
-
-      const { dataList } = this.state
-      const itemsList = dataList  ? this.renderItems(dataList) : <Loader />
-
-      return (
+   return (
          <div className='list-wrapper'>
             <ul className='list'>
-               { itemsList }
+               { showContent }
             </ul>
          </div>
-      )
-   }
-
+   )
 }
 
+ItemList.defaultProps ={
+   onItemSelected: () => {}
+};
+
+ItemList.propTypes = {
+   dataList: PropTypes.arrayOf(PropTypes.object).isRequired,
+   children: PropTypes.func.isRequired,
+   onItemSelected: PropTypes.func
+}
+
+
+export default ItemList

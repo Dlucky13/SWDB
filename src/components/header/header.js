@@ -3,7 +3,7 @@ import './header.css'
 
 const links = ['People', 'Planet', 'Starships']
 
-export const Header = () => {
+export const Header = ({onServiceChange}) => {
 
    const navLinks = links.map( (navItem) => {
       return (
@@ -25,6 +25,10 @@ export const Header = () => {
             <ul className='nav-list'>
                {navLinks}
             </ul>
+         <button
+            className='btn btn-primary btn-sm'
+            onClick={onServiceChange}
+         >ChangeContext</button>
          {/*</div>*/}
       </div>
    )

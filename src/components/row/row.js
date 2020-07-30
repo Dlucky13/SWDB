@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types'
 
 const Row = ({leftSide, rightSide}) => {
    return (
@@ -7,6 +8,11 @@ const Row = ({leftSide, rightSide}) => {
          { rightSide }
       </div>
    )
+}
+
+Row.propTypes = {
+   leftSide: PropTypes.node,
+   rightSide: PropTypes.node
 }
 
 export default Row;
